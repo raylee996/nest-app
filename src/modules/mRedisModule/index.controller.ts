@@ -22,4 +22,40 @@ export class MRedisController {
     }
     return 'null';
   }
+
+  @Post('getTask')
+  async getTask(@Body() payload: { source: RedisKey; destination: RedisKey }) {
+    const res = await this.redisService.brpoplpush(
+      payload.source,
+      payload.destination,
+    );
+    return res;
+  }
+
+  @Post('pushTask')
+  async pushTask(
+    @Body() payload: { key: RedisKey; tasks: (string | number | Buffer)[] },
+  ) {
+    console.log(payload);
+
+    const res = await this.redisService.lpush(payload.key, ...payload.tasks);
+    return res;
+  }
+
+  @Post('addScore')
+  async addScore(
+    @Body()
+    payload: {
+      key: RedisKey;
+      scoreMembers: (string | number | Buffer)[];
+    },
+  ) {
+    console.log(payload);
+
+    const res = await this.redisService.zadd(
+      payload.key,
+      ...payload.scoreMembers,
+    );
+    return res;
+  }
 }

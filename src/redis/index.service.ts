@@ -56,4 +56,18 @@ export class RedisService {
     );
     return res;
   }
+
+  // 插入zset
+  public async zadd(
+    key: RedisKey,
+    ...scoreMembers: (string | number | Buffer)[]
+  ) {
+    const res = await this.publisher.zadd(key, ...scoreMembers);
+    return res;
+  }
+
+  // zset排序
+  public async zrange() {
+    const res = await this.publisher.zrange;
+  }
 }
