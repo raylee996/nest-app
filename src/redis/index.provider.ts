@@ -11,7 +11,7 @@ export const redisProvider: Provider[] = [
       return new IORedis({
         host: redisConfig.host,
         port: redisConfig.port,
-        password: redisConfig.password,
+        // password: redisConfig.password,
       });
     },
   },
@@ -21,7 +21,7 @@ export const redisProvider: Provider[] = [
       return new IORedis({
         host: redisConfig.host,
         port: redisConfig.port,
-        password: redisConfig.password,
+        // password: redisConfig.password,
       });
     },
   },
