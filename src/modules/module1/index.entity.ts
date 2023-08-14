@@ -17,13 +17,14 @@ export class Module1Entity {
   username: string;
 
   @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: false,
+  })
+  password: string;
+
+  @Column({
     type: 'mediumblob',
   })
   avatar: string;
-
-  @Column({
-    type: 'varchar',
-    length: 255,
-  })
-  role: string;
 }

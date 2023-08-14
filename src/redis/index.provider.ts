@@ -1,27 +1,25 @@
 import { Provider } from '@nestjs/common';
 import IORedis, { Redis } from 'ioredis';
-import config from 'config';
-
-const redisConfig = config.get<IRedisSetting>('REDIS_SETTINGS');
+import { REDIS_PUBLISHER, REDIS_SUBSCRIBER } from './constants';
 
 export const redisProvider: Provider[] = [
   {
-    provide: 'REDIS_CLIENT',
+    provide: REDIS_SUBSCRIBER,
     useFactory: (): Redis => {
       return new IORedis({
-        host: redisConfig.host,
-        port: redisConfig.port,
-        // password: redisConfig.password,
+        host: '116.205.134.191',
+        port: 6379,
+        // password: '101liweifan',
       });
     },
   },
   {
-    provide: 'REDIS_SETTINGS',
+    provide: REDIS_PUBLISHER,
     useFactory: (): Redis => {
       return new IORedis({
-        host: redisConfig.host,
-        port: redisConfig.port,
-        // password: redisConfig.password,
+        host: '116.205.134.191',
+        port: 6379,
+        // password: '101liweifan',
       });
     },
   },

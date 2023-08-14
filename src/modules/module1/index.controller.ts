@@ -1,27 +1,36 @@
+import { RolesGuard } from './../../guards/role.guard';
+import { JoiPipe } from './../../pipes/joi.pipe';
+import { TransformPipe } from './../../pipes/transform.pipe';
+import { TestPipe } from './../../pipes/test.pipe';
+import { RedisKey } from 'ioredis';
+import { RedisService } from './../../redis/index.service';
 import {
   Controller,
   Get,
   Body,
   Param,
   Post,
-  UseInterceptors,
+  Query,
+  ParseIntPipe,
+  HttpStatus,
+  ParseArrayPipe,
+  UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { Module1Service } from './index.service';
 import { AddUserDto } from './addUser.dto';
-import { TimeoutInterceptor } from '../../interceptors/timeout.interceptor';
-
-function sleep() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 5000);
-  });
-}
+import * as Joi from 'joi';
+import { Role } from '../../decorators/role.decorator';
+import { Compose } from '../../decorators/compose.decorator';
+import { AuthBearer } from '../../decorators/createParam.decorator';
 
 @Controller('/module1')
-@UseInterceptors(new TimeoutInterceptor())
+// @Compose(['admin', 'developer'])
 export class Module1Controller {
-  constructor(private readonly module1Service: Module1Service) {}
+  constructor(
+    private readonly module1Service: Module1Service,
+    private readonly redisService: RedisService,
+  ) {}
 
   @Post('add')
   async add(@Body() payload: AddUserDto) {
@@ -39,5 +48,52 @@ export class Module1Controller {
     });
 
     return res;
+  }
+
+  @Post('setCache')
+  async setCache(@Body() payload: { key: RedisKey; value: unknown }) {
+    await this.redisService.set(payload.key, payload.value);
+    return 1;
+  }
+
+  @Get('getCache')
+  async getCache(@Query('key') key) {
+    const res = await this.redisService.get(key);
+
+    return res;
+  }
+
+  @Get('validateInt')
+  async validateInt(
+    @Query('id', new TransformPipe())
+    id,
+  ) {
+    return id;
+  }
+
+  @Post('validateArray')
+  // @Role('admin', 'developer')
+  @UseGuards(RolesGuard)
+  // @UsePipes(JoiPipe)
+  async validateArray(
+    /* @Body(
+      new ParseArrayPipe({
+        items: AddUserDto,
+      }),
+    ) */
+    /* @Body(
+      new JoiPipe(
+        Joi.object({
+          username: Joi.string().required(),
+          avatar: Joi.string(),
+          role: Joi.string(),
+        }),
+      ),
+      // TransformPipe,
+    ) */
+    @AuthBearer('user')
+    payload: AddUserDto,
+  ) {
+    return payload;
   }
 }
