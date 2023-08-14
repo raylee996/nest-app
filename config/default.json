@@ -1,6 +1,6 @@
 {
   "REDIS_SETTINGS": {
-    "host": "localhost",
+    "host": "116.205.134.191",
     "port": 6379,
     "password": "101liweifan"
   }
