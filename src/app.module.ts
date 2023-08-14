@@ -1,3 +1,4 @@
+import { MRedisModule } from './modules/mRedisModule/index.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -19,6 +20,7 @@ import { RedisModule } from './redis/index.module';
     }),
     Module1Module,
     RedisModule,
+    MRedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -10,17 +10,22 @@ export class RedisService {
   ) {}
 
   public async set(key: RedisKey, value: unknown) {
-    await this.publisher.set(key, JSON.stringify(value));
+    const res = await this.publisher.set(key, JSON.stringify(value));
+    return res;
   }
 
-  public async setNx(key: RedisKey, value: string | number | Buffer) {
-    await this.publisher.setnx(key, value);
+  public async setnx(key: RedisKey, id: string | number) {
+    const res = await this.publisher.setnx(key, id);
+    return res;
+  }
+
+  public async del(key: RedisKey) {
+    const res = await this.publisher.del(key);
+    return res;
   }
 
   public async get<T = any>(key: RedisKey) {
-    console.log('key: ', key);
     const res = await this.publisher.get(key);
-    console.log('res: ', res);
 
     try {
       const ret = JSON.parse(res);
@@ -28,5 +33,27 @@ export class RedisService {
     } catch {
       return res;
     }
+  }
+
+  // 任务进入队列
+  public async lpush(key: RedisKey, ...elements: (string | number | Buffer)[]) {
+    const res = await this.publisher.lpush(key, ...elements);
+    return res;
+  }
+
+  // 用于从备份队列取任务
+  public async rpop(key: RedisKey) {
+    const res = await this.publisher.rpop(key);
+    return res;
+  }
+
+  // 从主队列取任务
+  public async brpoplpush(source: RedisKey, destination: RedisKey) {
+    const res = await this.publisher.brpoplpush(
+      source,
+      destination,
+      24 * 60 * 60 * 1000,
+    );
+    return res;
   }
 }
