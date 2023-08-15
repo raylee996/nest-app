@@ -20,7 +20,6 @@ import {
 } from '@nestjs/common';
 import { Module1Service } from './index.service';
 import { AddUserDto } from './addUser.dto';
-import * as Joi from 'joi';
 import { Role } from '../../decorators/role.decorator';
 import { Compose } from '../../decorators/compose.decorator';
 import { AuthBearer } from '../../decorators/createParam.decorator';
