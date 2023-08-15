@@ -1,10 +1,14 @@
+import { DynamicService } from './../DynamicModule/index.service';
 import { RedisKey } from 'ioredis';
 import { RedisService } from './../../redis/index.service';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
 @Controller('redis')
 export class MRedisController {
-  constructor(private readonly redisService: RedisService) {}
+  constructor(
+    private readonly redisService: RedisService,
+    private readonly dynamicService: DynamicService,
+  ) {}
 
   @Post('setLock')
   async setLock(@Body() payload: { key: RedisKey; id: string | number }) {
@@ -21,5 +25,18 @@ export class MRedisController {
       return res;
     }
     return 'null';
+  }
+
+  @Get('test')
+  async test() {
+    this.redisService.testCustomService();
+    this.redisService.testClassService();
+    return 111;
+  }
+
+  @Get('testDynamice')
+  async testDynamice() {
+    this.dynamicService.test();
+    return 111;
   }
 }

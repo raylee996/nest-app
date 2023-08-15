@@ -1,3 +1,9 @@
+import { CustomService } from './../modules/CustomProvider/type';
+import {
+  CUSTOM_SERVICE,
+  CUSTOM_CLASS_SERVICE,
+  CustomClassService,
+} from './../modules/CustomProvider/index.provider';
 import { REDIS_SUBSCRIBER, REDIS_PUBLISHER } from './constants';
 import { Inject, Injectable } from '@nestjs/common';
 import Redis, { RedisKey } from 'ioredis';
@@ -7,6 +13,9 @@ export class RedisService {
   constructor(
     @Inject(REDIS_SUBSCRIBER) private readonly subscriber: Redis,
     @Inject(REDIS_PUBLISHER) private readonly publisher: Redis,
+    @Inject(CUSTOM_SERVICE) private readonly customService: CustomService,
+    @Inject(CUSTOM_CLASS_SERVICE)
+    private readonly customClassService: CustomClassService,
   ) {}
 
   public async set(key: RedisKey, value: unknown) {
@@ -55,5 +64,13 @@ export class RedisService {
       24 * 60 * 60 * 1000,
     );
     return res;
+  }
+
+  public async testCustomService() {
+    this.customService.do();
+  }
+
+  public async testClassService() {
+    this.customClassService.test();
   }
 }

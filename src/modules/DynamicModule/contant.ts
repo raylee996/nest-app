@@ -1,0 +1,1 @@
+export const GLOBAL_OPTIONS = 'GLOBAL_OPTIONS';

@@ -1,3 +1,4 @@
+import { DynamicService } from './../DynamicModule/index.service';
 import { RolesGuard } from './../../guards/role.guard';
 import { JoiPipe } from './../../pipes/joi.pipe';
 import { TransformPipe } from './../../pipes/transform.pipe';
@@ -30,6 +31,7 @@ export class Module1Controller {
   constructor(
     private readonly module1Service: Module1Service,
     private readonly redisService: RedisService,
+    private readonly dynamicService: DynamicService,
   ) {}
 
   @Post('add')
@@ -94,5 +96,11 @@ export class Module1Controller {
     payload: AddUserDto,
   ) {
     return payload;
+  }
+
+  @Get('testDynamice')
+  async testDynamice() {
+    this.dynamicService.test();
+    return 111;
   }
 }
