@@ -27,6 +27,10 @@ import { AuthBearer } from '../../decorators/createParam.decorator';
 @Controller('/module1')
 // @Compose(['admin', 'developer'])
 export class Module1Controller {
+  onApplicationBootstrap() {
+    console.log('Controller onApplicationBootstrap');
+  }
+
   constructor(
     private readonly module1Service: Module1Service,
     private readonly redisService: RedisService,

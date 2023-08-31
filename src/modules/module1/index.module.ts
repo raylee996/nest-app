@@ -14,4 +14,11 @@ import { Module1Controller } from './index.controller';
   providers: [Module1Service],
   controllers: [Module1Controller],
 })
-export class Module1Module {}
+export class Module1Module {
+  onModuleInit() {
+    console.log('Module1Module init');
+  }
+  onApplicationBootstrap() {
+    console.log('module onApplicationBootstrap');
+  }
+}

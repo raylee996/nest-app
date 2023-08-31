@@ -84,7 +84,8 @@ export class RedisService {
   }
 
   // zset排序
-  public async zrange() {
-    const res = await this.publisher.zrange;
+  public async zrangebylex(key: RedisKey) {
+    const res = await this.publisher.zrangebylex(key, '-', '+');
+    return res;
   }
 }

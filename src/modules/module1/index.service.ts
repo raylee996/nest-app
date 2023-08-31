@@ -5,6 +5,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class Module1Service {
+  onApplicationBootstrap() {
+    console.log('service onApplicationBootstrap');
+  }
+
   constructor(
     @InjectRepository(Module1Entity)
     private module1Repository: Repository<Module1Entity>,

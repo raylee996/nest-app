@@ -1,3 +1,4 @@
+import { LoggerService } from './../../logger/logger.service';
 import { DynamicService } from './../DynamicModule/index.service';
 import { RedisKey } from 'ioredis';
 import { RedisService } from './../../redis/index.service';
@@ -8,6 +9,7 @@ export class MRedisController {
   constructor(
     private readonly redisService: RedisService,
     private readonly dynamicService: DynamicService,
+    private readonly logger: LoggerService,
   ) {}
 
   @Post('setLock')
@@ -31,7 +33,8 @@ export class MRedisController {
   async test() {
     this.redisService.testCustomService();
     this.redisService.testClassService();
-    return 111;
+    this.logger.info(null, process.pid);
+    return process.pid;
   }
 
   @Get('testDynamice')
