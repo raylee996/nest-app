@@ -2,6 +2,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Injectable, Inject } from '@nestjs/common';
 import { Cron, CronExpression, Interval } from '@nestjs/schedule';
 import { Cache } from 'cache-manager';
+import * as config from 'config';
 
 @Injectable()
 export class CronService {
@@ -20,6 +21,8 @@ export class CronService {
   @Interval(10000)
   async handleInterval() {
     const val = await this.cacheManager.get('key2');
+    console.log(config.get('REDIS_SETTINGS'));
+
     if (val) {
       console.log(val);
     } else {
