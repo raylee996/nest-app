@@ -1,3 +1,4 @@
+import { CVSModule } from './modules/CVSModule/index.module';
 import { MRedisModule } from './modules/mRedisModule/index.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -6,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module1Module } from './modules/module1/index.module';
 import { RedisModule } from './redis/index.module';
 import { LoggerModule } from './logger/logger.module';
+import { SubscribeModule } from './modules/SubscribeModule/index.module';
+import { PublishModule } from './modules/PublishModule/index.module';
 
 @Module({
   imports: [
@@ -23,6 +26,9 @@ import { LoggerModule } from './logger/logger.module';
     RedisModule,
     MRedisModule,
     LoggerModule,
+    SubscribeModule,
+    PublishModule,
+    CVSModule,
   ],
   controllers: [AppController],
   providers: [AppService],

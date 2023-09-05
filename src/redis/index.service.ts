@@ -74,6 +74,7 @@ export class RedisService {
     this.customClassService.test();
   }
 
+  /* zset手机号排序 */
   // 插入zset
   public async zadd(
     key: RedisKey,

@@ -12,6 +12,7 @@ export class MRedisController {
     private readonly logger: LoggerService,
   ) {}
 
+  /* 分布式锁 */
   @Post('setLock')
   async setLock(@Body() payload: { key: RedisKey; id: string | number }) {
     const res = await this.redisService.setnx(payload.key, payload.id);
@@ -29,6 +30,7 @@ export class MRedisController {
     return 'null';
   }
 
+  /* 测试自定义提供者和日志模块 */
   @Get('test')
   async test() {
     this.redisService.testCustomService();
@@ -37,6 +39,7 @@ export class MRedisController {
     return process.pid;
   }
 
+  /* 测试动态模块 */
   @Get('testDynamice')
   async testDynamice() {
     this.dynamicService.test();
