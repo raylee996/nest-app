@@ -17,6 +17,7 @@ import {
   ParseArrayPipe,
   UsePipes,
   UseGuards,
+  OnModuleInit,
 } from '@nestjs/common';
 import { Module1Service } from './index.service';
 import { AddUserDto } from './addUser.dto';
@@ -26,9 +27,9 @@ import { AuthBearer } from '../../decorators/createParam.decorator';
 
 @Controller('/module1')
 // @Compose(['admin', 'developer'])
-export class Module1Controller {
-  onApplicationBootstrap() {
-    console.log('Controller onApplicationBootstrap');
+export class Module1Controller implements OnModuleInit {
+  onModuleInit() {
+    console.log('Controller onModuleInit');
   }
 
   constructor(

@@ -16,6 +16,10 @@ import {
 
 @Injectable()
 export class TimeoutInterceptor implements NestInterceptor {
+  onApplicationBootstrap() {
+    console.log('Interceptor onApplicationBootstrap');
+  }
+
   intercept(
     context: ExecutionContext,
     next: CallHandler<any>,
