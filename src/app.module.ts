@@ -1,3 +1,4 @@
+import { CVSModule } from './modules/CVSModule/index.module';
 import { MRedisModule } from './modules/mRedisModule/index.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -27,6 +28,7 @@ import { PublishModule } from './modules/PublishModule/index.module';
     LoggerModule,
     SubscribeModule,
     PublishModule,
+    CVSModule,
   ],
   controllers: [AppController],
   providers: [AppService],
