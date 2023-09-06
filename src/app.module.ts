@@ -1,3 +1,4 @@
+import { BullQueueModule } from './modules/BullQueueModule/index.module';
 import { CVSModule } from './modules/CVSModule/index.module';
 import { MRedisModule } from './modules/mRedisModule/index.module';
 import { Module } from '@nestjs/common';
@@ -13,6 +14,7 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { MCacheModule } from './modules/MCacheModule/index.module';
 import { CronModule } from './modules/CronModule/index.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -40,6 +42,13 @@ import { ScheduleModule } from '@nestjs/schedule';
     MCacheModule,
     ScheduleModule.forRoot(),
     CronModule,
+    BullModule.forRoot('alternative-config', {
+      redis: {
+        host: '116.205.134.191',
+        port: 6379,
+      },
+    }),
+    BullQueueModule,
   ],
   controllers: [AppController],
   providers: [AppService],
