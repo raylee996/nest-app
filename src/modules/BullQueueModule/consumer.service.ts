@@ -1,9 +1,7 @@
 import { OnQueueActive, Processor } from '@nestjs/bull';
 import { Job } from 'bull';
 
-@Processor({
-  name: 'queue1',
-})
+@Processor('queue1')
 export class BullConsumer {
   @OnQueueActive()
   onActive(job: Job) {

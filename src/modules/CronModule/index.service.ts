@@ -8,7 +8,7 @@ import * as config from 'config';
 export class CronService {
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_10_MINUTES)
   async handleCron() {
     const val = await this.cacheManager.get('key');
     if (val) {
@@ -18,7 +18,7 @@ export class CronService {
     }
   }
 
-  @Interval(10000)
+  @Interval(100000)
   async handleInterval() {
     const val = await this.cacheManager.get('key2');
     console.log(config.get('REDIS_SETTINGS'));
